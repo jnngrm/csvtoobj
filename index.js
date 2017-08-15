@@ -16,7 +16,7 @@ const ruleLibs = {
 function parseCsvs(config, next) {
   async.each(config.csvFiles, function(file, callback) {
     file.records = {};
-    csv().fromFile(`${_dir}/${file.name}`).on('json', function(obj) {
+    csv().fromFile(`${process.env.PWD}/${file.name}`).on('json', function(obj) {
       file.records[obj[file.id]] = obj;
     }).on('done', callback);
   }, next);
