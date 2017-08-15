@@ -1,0 +1,34 @@
+{
+  "name": "csvtoobj",
+  "version": "1.0.0",
+  "description": "Validate and translate one or more CSVs to JSON.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnngrm/csvtoobj.git"
+  },
+  "keywords": [
+    "CSV",
+    "to",
+    "JSON"
+  ],
+  "author": "jingram@classy.org",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jnngrm/csvtoobj/issues"
+  },
+  "homepage": "https://github.com/jnngrm/csvtoobj#readme",
+  "dependencies": {
+    "async": "^2.5.0",
+    "csvtojson": "^1.1.7",
+    "lodash": "^4.17.4",
+    "validator": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.4.1",
+    "eslint-config-google": "^0.9.1"
+  }
+}
