@@ -62,3 +62,6 @@ typings/
 
 # configs
 config.json
+
+# results
+results.txt

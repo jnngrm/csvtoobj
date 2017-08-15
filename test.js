@@ -2,7 +2,7 @@
 const csvtoobj = require('./index');
 const config = require(process.argv[2]);
 
-function counts(objects) {
+function counts(config, objects) {
   let success = 0;
   let fail = 0;
   for (let object of objects) {
@@ -12,10 +12,14 @@ function counts(objects) {
       fail++;
     }
   }
-  console.log(`success: ${success} fail: ${fail}`);
+  console.log(`COUNTS:
+    success: ${success}
+    fail: ${fail}
+    unmatched: ${config.unmatched ? config.unmatched.length : 0}`);
 }
 
 function mostSeenFailures(objects) {
+  console.log(`MOST SEEN FAILURES:`);
   let seen = {};
   for (let object of objects) {
     for (let failure of object.failures) {
@@ -31,15 +35,31 @@ function mostSeenFailures(objects) {
     });
   }
   for (let entry of sortable) {
-    console.log(`${entry.type}: ${entry.count}`);
+    console.log(`  ${entry.type}: ${entry.count}`);
   }
+}
+
+function printFailed(objects) {
+  console.log(`FAILED OBJECTS:`);
+  for (let object of objects) {
+    if (object.failures.length > 0) {
+      console.log(`  ${JSON.stringify(object, null, 2)}`);
+    }
+  }
+}
+
+function printUnmatched(config) {
+  console.log(`UNMATCHED IDS:
+    ${JSON.stringify(config.unmatched)}`);
 }
 
 csvtoobj(config, function(error, objects) {
   if (error) {
     console.error(error);
   } else {
-    counts(objects);
+    counts(config, objects);
     mostSeenFailures(objects);
+    printFailed(objects);
+    printUnmatched(config);
   }
 });

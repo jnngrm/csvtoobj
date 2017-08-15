@@ -2,7 +2,16 @@
 const csv = require('csvtojson');
 const async = require('async');
 const _ = require('lodash');
-const validator = require('validator');
+const countries = require('country-data').countries;
+const ruleLibs = {
+  validator: require('validator'),
+  countries: {
+    valid: function(code) {
+      return countries[code];
+    }
+  }
+};
+
 
 function parseCsvs(config, next) {
   async.each(config.csvFiles, function(file, callback) {
@@ -15,7 +24,8 @@ function parseCsvs(config, next) {
 
 function buildObject(config, id) {
   let root = {
-    id
+    id,
+    failures: []
   };
   for (let objectName of Object.keys(config.objects)) {
     root[objectName] = root[objectName] || {};
@@ -25,6 +35,14 @@ function buildObject(config, id) {
       if (record) {
         root[objectName][propertyKey] =
           _.get(record, property.name, property.default) || property.default;
+      } else {
+        config.unmatched = config.unmatched || [];
+        config.unmatched.push(id);
+        if (config.general.requireMatchingId) {
+          return null;
+        }
+        root.failures.push(
+          `${objectName}.${propertyKey}= (NO id:${id} in ${property.alias})`);
       }
     }
   }
@@ -35,14 +53,16 @@ function buildObjects(config) {
   let objects = [];
   let master = config.csvFiles[config.general.masterCsv];
   for (let id of Object.keys(master.records)) {
-    objects.push(buildObject(config, id));
+    let object = buildObject(config, id);
+    if (object) {
+      objects.push(buildObject(config, id));
+    }
   }
   return objects;
 }
 
 function validateObjects(config, objects) {
   for (let object of objects) {
-    object.failures = [];
     for (let objectName of Object.keys(config.objects)) {
       for (let propertyKey of Object.keys(config.objects[objectName])) {
         let property = config.objects[objectName][propertyKey];
@@ -50,7 +70,8 @@ function validateObjects(config, objects) {
           for (let rule of property.rules) {
             let value = object[objectName][propertyKey] || '';
             let args = rule.args || [];
-            let valid = validator[rule.def](value, ...args);
+            let lib = ruleLibs[rule.lib] || ruleLibs.validator;
+            let valid = lib[rule.def](value, ...args);
             if (!valid) {
               object.failures.push(
               `${objectName}.${propertyKey}=${value} (${rule.def}: ${valid})`);

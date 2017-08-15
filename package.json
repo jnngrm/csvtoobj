@@ -1,6 +1,6 @@
 {
   "name": "csvtoobj",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Validate and translate one or more CSVs to JSON.",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,9 @@
     "url": "git+https://github.com/jnngrm/csvtoobj.git"
   },
   "keywords": [
-    "CSV",
+    "csv",
     "to",
-    "JSON"
+    "obj"
   ],
   "author": "jingram@classy.org",
   "license": "MIT",
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/jnngrm/csvtoobj#readme",
   "dependencies": {
     "async": "^2.5.0",
+    "country-data": "0.0.31",
     "csvtojson": "^1.1.7",
     "lodash": "^4.17.4",
     "validator": "^8.0.0"
