@@ -196,7 +196,7 @@ Validate and translate one or more CSVs to JSON.  Uses JSON configuration file t
 }
 ```
 
-#usage
+# usage
 
 ```javascript
 const csvtoobj = require('csvtoobj');
@@ -210,7 +210,7 @@ csvtoobj(config, function(error, objects) {
 });
 ```
 
-#options
+# options
 
 **general**
 
@@ -220,20 +220,20 @@ csvtoobj(config, function(error, objects) {
 **csvFiles**
 
 * *csvFile*: The alias used to reference CSV in other parts of configuration.  Example above is masterCsv and slaveCsv.
-..* *name*: The filename which can be used to read the file.
-..* *id*: The ID that will associate the CSV row with other CSVs in this set.
+  * *name*: The filename which can be used to read the file.
+  * *id*: The ID that will associate the CSV row with other CSVs in this set.
 
 **objects**
 
 * *objectName*: The resulting name of the object in the root of returned object, examples above are recurring and paymentToken.
-..* *objectProperty*: The name of a property associated with the object, examples above are recurring.firstName, recurring.lastName.
-...* *alias*: Which CSV is associated with this property.
-...* *name*: The column in the CSV associated with this property.
-...* *default*: If not found or empty, the default value to use instead.
-...* *rules*: Validation rules to run against property value.
-....* *lib*: Which library to use for validation, see validation section below.
-....* *def*: The function name which will be invoked on the lib.
-....* *args*: Any args in addition to the already passed property value.
+  * *objectProperty*: The name of a property associated with the object, examples above are recurring.firstName, recurring.lastName.
+   * *alias*: Which CSV is associated with this property.
+   * *name*: The column in the CSV associated with this property.
+   * *default*: If not found or empty, the default value to use instead.
+   * *rules*: Validation rules to run against property value.
+    * *lib*: Which library to use for validation, see validation section below.
+    * *def*: The function name which will be invoked on the lib.
+    * *args*: Any args in addition to the already passed property value.
 
 # validation
 
