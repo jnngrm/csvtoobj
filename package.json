@@ -1,6 +1,6 @@
 {
   "name": "csvtoobj",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Validate and translate one or more CSVs to JSON.",
   "main": "index.js",
   "scripts": {
