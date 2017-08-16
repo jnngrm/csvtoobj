@@ -17,8 +17,8 @@ Validate and translate one or more CSVs to JSON.  Uses JSON configuration file t
       "name": "master.csv",
       "id": "id"
     },
-    "anotherCsv": {
-      "name": "another.csv",
+    "slaveCsv": {
+      "name": "slave.csv",
       "id": "Processor Transaction ID"
     }
   },
